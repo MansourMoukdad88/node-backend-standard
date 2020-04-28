@@ -1,3 +1,5 @@
+const uuid = require("uuid/v4");
+
 const HttpError = require("../models/http-error");
 
 const DUMMY_PLACES = [
@@ -30,7 +32,7 @@ const DUMMY_PLACES = [
 ];
 
 const getPlaceById = (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
 
   const placeId = req.params.pid; // { pid: 'p1}
   const place = DUMMY_PLACES.find((p) => {
@@ -45,7 +47,7 @@ const getPlaceById = (req, res, next) => {
 };
 
 const getPlaceByUserId = (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
 
   const userId = req.params.uid;
   const place = DUMMY_PLACES.find((p) => {
@@ -61,5 +63,24 @@ const getPlaceByUserId = (req, res, next) => {
   res.json({ place });
 };
 
+const createPlace = (req, res, next) => {
+  console.log(req.params);
+  const { title, description, coordinates, address, creator } = req.body;
+  // const title = req.body.title;
+  const createdPlace = {
+    id: uuid(),
+    title,
+    description,
+    location: coordinates,
+    address,
+    creator,
+  };
+
+  DUMMY_PLACES.push(createdPlace); // unshift(createdPlace)
+
+  res.status(201).json({ place: createdPlace });
+};
+
 exports.getPlaceById = getPlaceById;
 exports.getPlaceByUserId = getPlaceByUserId;
+exports.createPlace = createPlace;
