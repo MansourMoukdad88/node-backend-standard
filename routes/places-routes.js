@@ -38,6 +38,13 @@ router.get("/:pid", (req, res, next) => {
   const place = DUMMY_PLACES.find((p) => {
     return p.id === placeId;
   });
+
+  if (!place) {
+    const error = new Error("Cound not find a place for the porvided id.");
+    error.code = 404;
+    throw error;
+  }
+
   res.json({ place }); // => { place: place}
 });
 
@@ -48,6 +55,13 @@ router.get("/user/:uid", (req, res, next) => {
   const place = DUMMY_PLACES.find((p) => {
     return p.creator === userId;
   });
+
+  if (!place) {
+    const error = new Error("Cound not find a place for the porvided user id.");
+    error.code = 404;
+    return next(error);
+  }
+
   res.json({ place });
 });
 
