@@ -30,12 +30,25 @@ const DUMMY_PLACES = [
     creator: "u2",
   },
 ];
+
 router.get("/:pid", (req, res, next) => {
+  console.log(req.params);
+
   const placeId = req.params.pid; // { pid: 'p1}
   const place = DUMMY_PLACES.find((p) => {
     return p.id === placeId;
   });
   res.json({ place }); // => { place: place}
+});
+
+router.get("/user/:uid", (req, res, next) => {
+  console.log(req.params);
+
+  const userId = req.params.uid;
+  const place = DUMMY_PLACES.find((p) => {
+    return p.creator === userId;
+  });
+  res.json({ place });
 });
 
 module.exports = router;
