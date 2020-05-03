@@ -1,16 +1,9 @@
-const uuid = require("uuid/v4");
 const { validationResult } = require("express-validator");
 
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "Mansour Almoukdad",
-    email: "test@test.com",
-    password: "testers",
-  },
-];
+
+// ====== GET USERS ======
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -25,6 +18,8 @@ const getUsers = async (req, res, next) => {
   }
   res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
+
+// ====== SIGNUP ======
 
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
@@ -70,6 +65,8 @@ const signup = async (req, res, next) => {
 
   res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
+
+// ====== LOGIN ======
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
